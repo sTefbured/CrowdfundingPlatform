@@ -19,9 +19,9 @@ namespace CrowdfundingPlatform
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvcCore(options => options.EnableEndpointRouting = false); //TODO: MAYBE CHANGE TO AddMvc()
-            services.AddTransient<ICampaigns, MockCampaign>();
-            services.AddTransient<ICategories, MockCategory>();
+            services.AddMvc(options => options.EnableEndpointRouting = false); //TODO: MAYBE CHANGE TO AddMvc()
+            services.AddTransient<ICampaignRepository, MockCampaign>();
+            services.AddTransient<ICategoryRepository, MockCategory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,0 +1,28 @@
+﻿
+@using CrowdfundingPlatform.ViewModels
+@model CampaignListViewModel
+@{
+    ViewData["Ttle"] = "CampaignsList";
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>List</title>
+</head>
+<body>
+    <h1>All campaigns</h1>
+    <h3>@Model.CurrentCategory</h3>
+    @{ 
+        foreach (var campaign in Model.Campaigns)
+        {
+            <div>
+                <h2>Campaign: @campaign.Name</h2>
+                <p>@campaign.ShortDescription</p>
+            </div>
+        }
+    }
+</body>
+</html>
