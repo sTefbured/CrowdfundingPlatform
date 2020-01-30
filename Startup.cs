@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CrowdfundingPlatform.Data.Mocks;
+using CrowdfundingPlatform.Data.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,6 +20,8 @@ namespace CrowdfundingPlatform
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvcCore(options => options.EnableEndpointRouting = false); //TODO: MAYBE CHANGE TO AddMvc()
+            services.AddTransient<ICampaigns, MockCampaign>();
+            services.AddTransient<ICategories, MockCategory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

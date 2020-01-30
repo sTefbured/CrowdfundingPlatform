@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CrowdfundingPlatform.Data.Repositories
 {
-    interface ICategory
+    public interface ICategoryRepository
     {
         IEnumerable<Category> Categories { get; }
     }

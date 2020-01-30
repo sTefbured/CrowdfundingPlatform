@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CrowdfundingPlatform.Data.Repositories
 {
-    interface ICampaign
+    public interface ICampaignRepository
     {
         IEnumerable<Campaign> Campaigns { get; }
         Campaign getById(int id);

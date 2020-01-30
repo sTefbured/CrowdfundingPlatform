@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace CrowdfundingPlatform.Data.Mocks
 {
-    public class MockCampaign : ICampaign
+    public class MockCampaign : ICampaignRepository
     {
-        private readonly ICategory categoryRepository = new MockCategory();
+        private readonly ICategoryRepository categoryRepository = new MockCategory();
         public IEnumerable<Campaign> Campaigns
         {
             get
