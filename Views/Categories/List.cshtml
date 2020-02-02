@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Categories";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>List</title>
+</head>
+<body>
+    <h1>All categories</h1>
+    @{
+        foreach (var category in Model.Categories)
+        {
+            <div>
+                <h2>Campaign: @category.Name</h2>
+                <p>@category.Description</p>
+            </div>
+        }
+    }
+</body>
+</html>

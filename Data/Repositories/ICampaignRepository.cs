@@ -8,7 +8,7 @@ namespace CrowdfundingPlatform.Data.Repositories
 {
     public interface ICampaignRepository
     {
-        IEnumerable<Campaign> Campaigns { get; }
-        Campaign getById(int id);
+        ISet<Campaign> Campaigns { get; }
+        Campaign GetById(int id);
     }
 }

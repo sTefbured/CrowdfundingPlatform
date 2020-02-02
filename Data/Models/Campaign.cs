@@ -15,7 +15,11 @@ namespace CrowdfundingPlatform.Data.Models
         public DateTime GoalDate { get; set; }
         public double MoneyEarned { get; set; }
         public double MoneyGoal { get; set; }
+        public bool IsPopular { get; set; }
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
+        public ISet<string> Tags { get; set; }
+        public string ImageGalleryUrl { get; set; }
+        public string VideoUrl { get; set; }
     }
 }

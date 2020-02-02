@@ -10,6 +10,6 @@ namespace CrowdfundingPlatform.Data.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public HashSet<Campaign> Campaigns { get; set; }
+        public ISet<Campaign> Campaigns { get; set; }
     }
 }

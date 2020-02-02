@@ -8,6 +8,6 @@ namespace CrowdfundingPlatform.Data.Repositories
 {
     public interface ICategoryRepository
     {
-        IEnumerable<Category> Categories { get; }
+        ISet<Category> Categories { get; }
     }
 }

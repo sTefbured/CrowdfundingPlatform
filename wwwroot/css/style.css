@@ -1,0 +1,18 @@
+﻿body {
+    background-color: darkgray;
+}
+
+#mainBlock {
+    padding-top: 100px;
+}
+
+.unmarkable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.footer-list-item {
+    text-align: center;
+}

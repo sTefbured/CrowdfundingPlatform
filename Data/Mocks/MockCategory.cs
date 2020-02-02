@@ -9,7 +9,7 @@ namespace CrowdfundingPlatform.Data.Mocks
 {
     public class MockCategory : ICategoryRepository
     {
-        public IEnumerable<Category> Categories
+        public ISet<Category> Categories
         {
             get
             {

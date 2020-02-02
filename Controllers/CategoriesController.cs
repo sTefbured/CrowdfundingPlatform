@@ -8,22 +8,21 @@ using System.Threading.Tasks;
 
 namespace CrowdfundingPlatform.Controllers
 {
-    public class CampaignsController : Controller
+    public class CategoriesController : Controller
     {
         private readonly ICampaignRepository _campaignRepository;
         private readonly ICategoryRepository _categoryRepository;
 
-        public CampaignsController(ICampaignRepository campaignRepository, ICategoryRepository categoryRepository)
+        public CategoriesController(ICampaignRepository campaignRepository, ICategoryRepository categoryRepository)
         {
             _campaignRepository = campaignRepository;
             _categoryRepository = categoryRepository;
-        }
+        }  
 
         public ViewResult List()
         {
-            CampaignsListViewModel viewModel = new CampaignsListViewModel();
-            viewModel.Campaigns = _campaignRepository.Campaigns;
-            viewModel.CurrentCategory = "Rocketry";
+            CategoriesListViewModel viewModel = new CategoriesListViewModel();
+            viewModel.Categories = _categoryRepository.Categories;
             return View(viewModel);
         }
     }

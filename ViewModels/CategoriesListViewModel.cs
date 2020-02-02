@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace CrowdfundingPlatform.ViewModels
 {
-    public class CampaignsListViewModel
+    public class CategoriesListViewModel
     {
-        public ISet<Campaign> Campaigns { get; set; }
-        public string CurrentCategory { get; set; }
+        public ISet<Category> Categories { get; set; }
     }
 }

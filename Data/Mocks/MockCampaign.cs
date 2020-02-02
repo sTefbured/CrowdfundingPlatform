@@ -10,7 +10,7 @@ namespace CrowdfundingPlatform.Data.Mocks
     public class MockCampaign : ICampaignRepository
     {
         private readonly ICategoryRepository categoryRepository = new MockCategory();
-        public IEnumerable<Campaign> Campaigns
+        public ISet<Campaign> Campaigns
         {
             get
             {
@@ -42,7 +42,7 @@ namespace CrowdfundingPlatform.Data.Mocks
             }
         }
 
-        public Campaign getById(int id)
+        public Campaign GetById(int id)
         {
             return Campaigns.ElementAt(id);
         }
