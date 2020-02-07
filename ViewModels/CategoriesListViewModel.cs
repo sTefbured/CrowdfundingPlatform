@@ -1,4 +1,4 @@
-﻿using CrowdfundingPlatform.Data.Models;
+﻿using CrowdfundingPlatform.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +8,6 @@ namespace CrowdfundingPlatform.ViewModels
 {
     public class CategoriesListViewModel
     {
-        public ISet<Category> Categories { get; set; }
+        public IEnumerable<Category> Categories { get; set; }
     }
 }

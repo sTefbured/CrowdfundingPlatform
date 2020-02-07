@@ -1,4 +1,4 @@
-﻿using CrowdfundingPlatform.Data.Models;
+﻿using CrowdfundingPlatform.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +8,6 @@ namespace CrowdfundingPlatform.Data.Repositories
 {
     public interface ICategoryRepository
     {
-        ISet<Category> Categories { get; }
+        IEnumerable<Category> Categories { get; }
     }
 }

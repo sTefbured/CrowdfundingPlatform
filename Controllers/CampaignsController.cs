@@ -1,4 +1,5 @@
-﻿using CrowdfundingPlatform.Data.Repositories;
+﻿using CrowdfundingPlatform.Models;
+using CrowdfundingPlatform.Data.Repositories;
 using CrowdfundingPlatform.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -25,6 +26,13 @@ namespace CrowdfundingPlatform.Controllers
             viewModel.Campaigns = _campaignRepository.Campaigns;
             viewModel.CurrentCategory = "Rocketry";
             return View(viewModel);
+        }
+
+        [Route("~/campaigns/id={id}")]
+        public ViewResult Campaign(int id)
+        {
+            Campaign campaign = _campaignRepository.GetById(id);
+            return View(campaign);
         }
     }
 }

@@ -4,6 +4,7 @@
 
 #mainBlock {
     padding-top: 100px;
+    padding-bottom: 30px;
 }
 
 .unmarkable {
@@ -15,4 +16,16 @@
 
 .footer-list-item {
     text-align: center;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.height-70 {
+    height: 70px;
+}
+
+#fav-block {
+    width: 250px;
 }

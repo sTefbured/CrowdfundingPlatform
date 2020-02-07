@@ -1,4 +1,4 @@
-﻿using CrowdfundingPlatform.Data.Models;
+﻿using CrowdfundingPlatform.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ namespace CrowdfundingPlatform.ViewModels
 {
     public class CampaignsListViewModel
     {
-        public ISet<Campaign> Campaigns { get; set; }
+        public IEnumerable<Campaign> Campaigns { get; set; }
         public string CurrentCategory { get; set; }
     }
 }

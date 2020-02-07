@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+
+namespace CrowdfundingPlatform.Models
+{
+    public class AppDbContext : IdentityDbContext
+    {
+        public DbSet<Campaign> Campaigns { get; set; }
+        public DbSet<Category> Categories { get; set; }
+
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<Campaign>().HasData(
+                new Campaign
+                {
+                    Id = 1,
+                    Name = "RoX",
+                    ShortDescription = "Rock it, RoX's rockets!",
+                    FullDescription = "RoX is a bunch of people with a fantastic idea: bringing humanity to outer planets.",
+                    MoneyGoal = 1000000,                    
+                    GoalDate = new DateTime(2025, 9, 9),
+                    CategoryId = 1
+                }
+            );
+            builder.Entity<Category>().HasData(
+                new Category
+                {
+                    Id = 1,
+                    Name = "Rocketry",
+                    Description = "Everything connected with rockets."
+                }
+            );
+        }
+    }
+}

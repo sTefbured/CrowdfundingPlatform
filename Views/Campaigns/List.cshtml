@@ -2,16 +2,15 @@
     ViewData["Title"] = "Campaigns List";
 }
 
-<body>
+<div>
     <h1>All campaigns</h1>
-    <h3>@Model.CurrentCategory</h3>
     @{ 
         foreach (var campaign in Model.Campaigns)
         {
             <div>
                 <h2>Campaign: @campaign.Name</h2>
-                <p>@campaign.ShortDescription</p>
+                <p>@campaign.FullDescription</p>
             </div>
         }
     }
-</body>
+</div>

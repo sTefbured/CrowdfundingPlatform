@@ -1,0 +1,19 @@
+﻿@model HomeIndexViewModel
+@{ 
+    ViewBag.Title = "Home";
+}
+
+<div class="text-align-center">
+    <h1>Welcome to CrowdIO!</h1>
+</div>
+
+<div class="container text-align-center">
+    @foreach (var favoriteCampaign in Model.FavoriteCampaigns)
+    {
+        <div class="badge badge-dark justify-content-lg-center m-1" id="fav-block">
+            <h3>@favoriteCampaign.Name</h3>
+            <font size="3">@favoriteCampaign.ShortDescription<br /></font>
+            <a href="~/campaigns/id=@favoriteCampaign.Id" class="btn btn-info m-2">View</a>
+        </div>
+    }
+</div>
