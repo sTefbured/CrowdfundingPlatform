@@ -9,6 +9,5 @@ namespace CrowdfundingPlatform.ViewModels
     public class CampaignsListViewModel
     {
         public IEnumerable<Campaign> Campaigns { get; set; }
-        public string CurrentCategory { get; set; }
     }
 }

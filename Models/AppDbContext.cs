@@ -7,10 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CrowdfundingPlatform.Models
 {
-    public class AppDbContext : IdentityDbContext
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Campaign> Campaigns { get; set; }
-        public DbSet<Category> Categories { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -26,15 +25,6 @@ namespace CrowdfundingPlatform.Models
                     FullDescription = "RoX is a bunch of people with a fantastic idea: bringing humanity to outer planets.",
                     MoneyGoal = 1000000,                    
                     GoalDate = new DateTime(2025, 9, 9),
-                    CategoryId = 1
-                }
-            );
-            builder.Entity<Category>().HasData(
-                new Category
-                {
-                    Id = 1,
-                    Name = "Rocketry",
-                    Description = "Everything connected with rockets."
                 }
             );
         }

@@ -5,5 +5,12 @@
 
 <div>
     <h2>@Model.Name</h2>
+    <span class="card-text">@Model.RegistrationDate</span>
     <font size="5">@Model.FullDescription</font>
+    <form method="post">
+        <button class="btn btn-danger" asp-action="delete" asp-controller="campaigns" 
+                asp-route-id="@Model.Id">
+            Delete
+        </button>
+    </form>
 </div>

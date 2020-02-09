@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject  SignInManager<ApplicationUser> signInManager;
+
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -23,7 +25,10 @@
                         <a class="nav-link" href="~/home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="~/categories/list">Campaigns</a>
+                        <a class="nav-link" href="~/campaigns/list">Campaigns</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/campaigns/create">Create campaign</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="~/about">About</a>
@@ -35,9 +40,26 @@
                         <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
                     </form>
                     <ul class="navbar-nav ml-2">
-                        <li class="nav-item">
-                            <a class="nav-link" href="~/account/register">Register</a>
-                        </li>
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-link" href="#">@User.Identity.Name</a>
+                            </li>
+                            <li class="nav-item">
+                                <form method="post" asp-controller="account" asp-action="logout">
+                                    <button type="submit" class="nav-link btn btn-link">Logout</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="~/account/register">Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="~/account/login">Log in</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -73,7 +95,9 @@
         </div>
     </footer>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>

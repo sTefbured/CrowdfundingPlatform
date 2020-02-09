@@ -1,6 +1,7 @@
 ﻿using CrowdfundingPlatform.Models;
-using CrowdfundingPlatform.Data.Repositories;
+using CrowdfundingPlatform.Repositories;
 using CrowdfundingPlatform.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,19 +13,16 @@ namespace CrowdfundingPlatform.Controllers
     public class CampaignsController : Controller
     {
         private readonly ICampaignRepository _campaignRepository;
-        private readonly ICategoryRepository _categoryRepository;
 
-        public CampaignsController(ICampaignRepository campaignRepository, ICategoryRepository categoryRepository)
+        public CampaignsController(ICampaignRepository campaignRepository)
         {
             _campaignRepository = campaignRepository;
-            _categoryRepository = categoryRepository;
         }
 
         public ViewResult List()
         {
             CampaignsListViewModel viewModel = new CampaignsListViewModel();
             viewModel.Campaigns = _campaignRepository.Campaigns;
-            viewModel.CurrentCategory = "Rocketry";
             return View(viewModel);
         }
 
@@ -33,6 +31,29 @@ namespace CrowdfundingPlatform.Controllers
         {
             Campaign campaign = _campaignRepository.GetById(id);
             return View(campaign);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Create(Campaign campaign)
+        {
+            _campaignRepository.Add(campaign);
+            return Redirect("~/campaigns/id=" + campaign.Id);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            _campaignRepository.Delete(id);
+            return RedirectToAction("List", "Campaigns");
         }
     }
 }

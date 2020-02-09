@@ -25,9 +25,6 @@ namespace CrowdfundingPlatform.Models
         [Required]
         public double MoneyGoal { get; set; }
         public bool IsPopular { get; set; }
-        public int CategoryId { get; set; }
-        [Required]
-        public virtual Category Category { get; set; }
         public string ImageGalleryUrl { get; set; }
         public string VideoUrl { get; set; }
     }

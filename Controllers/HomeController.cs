@@ -1,4 +1,4 @@
-﻿using CrowdfundingPlatform.Data.Repositories;
+﻿using CrowdfundingPlatform.Repositories;
 using CrowdfundingPlatform.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;

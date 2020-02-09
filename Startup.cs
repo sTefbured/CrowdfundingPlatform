@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CrowdfundingPlatform.Mocks;
-using CrowdfundingPlatform.Data.Repositories;
+using CrowdfundingPlatform.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -29,7 +28,7 @@ namespace CrowdfundingPlatform
             services.AddDbContextPool<AppDbContext>(options => options
                 .UseSqlServer(_configuration.GetConnectionString("CrowdIODBConnection")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireDigit = false;
@@ -39,7 +38,6 @@ namespace CrowdfundingPlatform
 
             services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddTransient<ICampaignRepository, CampaignRepository>();
-            services.AddTransient<ICategoryRepository, CategoryRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
