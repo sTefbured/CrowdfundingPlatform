@@ -1,0 +1,10 @@
+﻿@model UserAccountViewModel
+@{ 
+    ViewBag.Title = Model.UserToShow.Nickname;
+}
+
+<h2 style="width: initial">@Model.UserToShow.Nickname</h2>
+<span class="card-text">Registered: @Model.UserToShow.RegistrationDate.ToShortDateString()</span>
+<div>
+    <img src="@Model.UserToShow.AvatarPath"/>
+</div>

@@ -45,7 +45,7 @@ namespace CrowdfundingPlatform.Controllers
         public IActionResult Create(Campaign campaign)
         {
             _campaignRepository.Add(campaign);
-            return Redirect("~/campaigns/id=" + campaign.Id);
+            return RedirectToAction("campaign", new { Id = campaign.Id });
         }
 
         [Authorize]

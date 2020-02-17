@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Campaigns List";
+    ViewBag.Title = "Campaigns List";
 }
 
 <div>
@@ -8,8 +8,12 @@
         foreach (var campaign in Model.Campaigns)
         {
             <div>
-                <h2>Campaign: @campaign.Name</h2>
-                <p>@campaign.FullDescription</p>
+                <h2>
+                    <a asp-action="campaign" asp-controller="campaigns" asp-route-id="@campaign.Id">
+                        @campaign.Name
+                    </a>
+                </h2>
+                <p>@campaign.ShortDescription</p>
             </div>
         }
     }

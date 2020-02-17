@@ -26,6 +26,10 @@
     height: 70px;
 }
 
+.formatted-text {
+    white-space: pre-wrap;
+}
+
 #fav-block {
     width: 250px;
 }

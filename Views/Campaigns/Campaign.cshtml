@@ -1,14 +1,17 @@
 ﻿@model CrowdfundingPlatform.Models.Campaign
+@addTagHelper *, Westwind.AspNetCore.Markdown
 @{
     ViewBag.Title = Model.Name;
 }
 
 <div>
-    <h2>@Model.Name</h2>
-    <span class="card-text">@Model.RegistrationDate</span>
-    <font size="5">@Model.FullDescription</font>
+    <h1>@Model.Name</h1>
+    <span class="text-muted">@Model.RegistrationDate.Date</span>
+    <div style="overflow: hidden">
+        <markdown markdown="@Model.FullDescription" />
+    </div>
     <form method="post">
-        <button class="btn btn-danger" asp-action="delete" asp-controller="campaigns" 
+        <button class="btn btn-danger" asp-action="delete" asp-controller="campaigns"
                 asp-route-id="@Model.Id">
             Delete
         </button>

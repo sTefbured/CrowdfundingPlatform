@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using CrowdfundingPlatform.Models;
 using Microsoft.AspNetCore.Identity;
+using Westwind.AspNetCore.Markdown;
+using Markdig;
 
 namespace CrowdfundingPlatform
 {
@@ -36,8 +38,29 @@ namespace CrowdfundingPlatform
                 options.Password.RequiredUniqueChars = 3;
             }).AddEntityFrameworkStores<AppDbContext>();
 
-            services.AddMvc(options => options.EnableEndpointRouting = false);
+            services.AddMarkdown(config =>
+            {
+                config.ConfigureMarkdigPipeline = builder =>
+                {
+                    builder.UseEmphasisExtras(Markdig.Extensions.EmphasisExtras.EmphasisExtraOptions.Default)
+                        .UsePipeTables()
+                        .UseGridTables()
+                        .UseAutoLinks()
+                        .UseAbbreviations()
+                        .UseYamlFrontMatter()
+                        .UseEmojiAndSmiley(true)
+                        .UseListExtras()
+                        .UseFigures()
+                        .UseTaskLists()
+                        .UseCustomContainers()
+                        .UseGenericAttributes()
+                        .DisableHtml();
+                };
+            });
+            services.AddMvc(options => options.EnableEndpointRouting = false)
+                .AddApplicationPart(typeof(MarkdownPageProcessorMiddleware).Assembly);
             services.AddTransient<ICampaignRepository, CampaignRepository>();
+            services.AddSingleton<GoogleDriveRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -47,6 +70,7 @@ namespace CrowdfundingPlatform
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseMarkdown();
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseAuthentication();

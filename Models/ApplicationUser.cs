@@ -11,5 +11,9 @@ namespace CrowdfundingPlatform.Models
     {
         [Key]
         public int Identifier { get; set; }
+        public string Nickname { get; set; }
+        public DateTime RegistrationDate { get; set; }
+        public string AvatarPath { get; set; }
+        public DateTime DateOfBirth { get; set; }
     }
 }

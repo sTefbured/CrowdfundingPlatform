@@ -1,18 +1,45 @@
 ﻿@model RegisterViewModel
 @{ 
     ViewBag.Title = "Register";
+    var CurrentDate = DateTime.Now;
+    var Year = Convert.ToString(CurrentDate.Year - 18);
+    var Month = (CurrentDate.Month >= 10) 
+                ? CurrentDate.Month.ToString() 
+                : String.Concat('0', CurrentDate.Month.ToString());
+    var Day = (CurrentDate.Day >= 10) 
+                ? CurrentDate.Day.ToString() 
+                : String.Concat('0', CurrentDate.Day.ToString());
 }
 
-<h1>Register</h1>
 
-<div class="row">
-    <div class="col-md-12">
-        <form method="post">
+<div class="row justify-content-center"><h1>Register</h1></div>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <form enctype="multipart/form-data" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Nickname"></label>
+                <input asp-for="Nickname" class="form-control" />
+                <span asp-validation-for="Nickname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Avatar"></label>
+                <div class="custom-file">
+                    <input asp-for="Avatar" class="form-control custom-file-input" />
+                    <label class="custom-file-label">Choose file</label>
+                </div>
+            </div>
             <div class="form-group">
                 <label asp-for="Email"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfBirth"></label>
+                <input asp-for="DateOfBirth" type="date" class="form-control" 
+                       max="@Year-@Month-@Day"/>
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password"></label>
@@ -26,5 +53,16 @@
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
+
+        @section Scripts {
+            <script>
+                $(document).ready(function () {
+                    $('.custom-file-input').on("change", function () {
+                        var filename = $(this).val().split("\\").pop();
+                        $(this).next('.custom-file-label').html(filename);
+                    });
+                })
+            </script>
+        }
     </div>
 </div>

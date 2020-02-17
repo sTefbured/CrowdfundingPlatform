@@ -20,8 +20,8 @@
                 <span asp-validation-for="ShortDescription" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FullDescription"></label>
-                <input asp-for="FullDescription" class="form-control" />
+                <label asp-for="FullDescription">Full description (Markdown is supported)</label>
+                <textarea rows="10" asp-for="FullDescription" class="form-control"></textarea>
                 <span asp-validation-for="FullDescription" class="text-danger"></span>
             </div>
             <div class="form-group">
