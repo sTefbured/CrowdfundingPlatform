@@ -1,0 +1,23 @@
+﻿@model SearchViewModel
+@{ 
+    ViewBag.Title = "Search";
+}
+
+<h1>Search for: @Model.Query</h1>
+
+<div class="container">
+    <div class="card-group">
+        @foreach (var campaign in Model.Campaigns)
+        {
+            <div class="card m-1">
+                <div class="card-header text-align-center bg-dark">
+                    <a class="card-text text-light card-link" style="font-size: xx-large; font-weight: bold" asp-action="campaign" 
+                       asp-controller="campaigns" asp-route-id="@campaign.Id">
+                        @campaign.Name
+                    </a>
+                </div>
+                <div class="card-body">@campaign.ShortDescription</div>
+            </div>
+        }
+    </div>
+</div>

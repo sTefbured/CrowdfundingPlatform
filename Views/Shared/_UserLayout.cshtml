@@ -1,4 +1,4 @@
-﻿@inject  SignInManager<ApplicationUser> signInManager;
+﻿@inject SignInManager<ApplicationUser> signInManager;
 
 <!DOCTYPE html>
 
@@ -35,9 +35,9 @@
                     </li>
                 </ul>
                 <div class="navbar-nav">
-                    <form class="form-inline">
-                        <input class="form-control m-sm-auto" type="search"
-                               placeholder="Search" aria-label="Search">
+                    <form class="form-inline" asp-action="search" asp-controller="campaigns" method="get">
+                        <input name="query" class="form-control m-sm-auto" 
+                               type="search" placeholder="Search" aria-label="Search">
                     </form>
                     <ul class="navbar-nav">
                         @if (signInManager.IsSignedIn(User))

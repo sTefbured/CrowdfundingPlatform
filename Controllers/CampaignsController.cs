@@ -55,5 +55,21 @@ namespace CrowdfundingPlatform.Controllers
             _campaignRepository.Delete(id);
             return RedirectToAction("List", "Campaigns");
         }
+
+        [HttpGet]
+        public IActionResult Search(string query)
+        {
+            var model = new SearchViewModel();
+            model.Query = query;
+            query = query.ToLower();
+            model.Campaigns = _campaignRepository
+                              .Campaigns
+                              .Where(camp =>
+                                  camp.Name.ToLower().Contains(query)
+                                  || camp.FullDescription.ToLower().Contains(query)
+                                  || camp.ShortDescription.ToLower().Contains(query));
+
+            return View(model);
+        }
     }
 }
