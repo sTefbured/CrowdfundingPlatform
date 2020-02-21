@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CrowdfundingPlatform.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200215194259_AddBirthDateAndAvatarMigration")]
-    partial class AddBirthDateAndAvatarMigration
+    [Migration("20200221203115_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.1")
+                .HasAnnotation("ProductVersion", "3.1.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -45,9 +45,6 @@ namespace CrowdfundingPlatform.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<int>("Identifier")
-                        .HasColumnType("int");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -77,6 +74,9 @@ namespace CrowdfundingPlatform.Migrations
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -147,20 +147,6 @@ namespace CrowdfundingPlatform.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Campaigns");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            FullDescription = "RoX is a bunch of people with a fantastic idea: bringing humanity to outer planets.",
-                            GoalDate = new DateTime(2025, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsPopular = false,
-                            MoneyEarned = 0.0,
-                            MoneyGoal = 1000000.0,
-                            Name = "RoX",
-                            RegistrationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ShortDescription = "Rock it, RoX's rockets!"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -188,6 +174,22 @@ namespace CrowdfundingPlatform.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "993952a6-fd52-464a-ab42-4c16098a9e31",
+                            ConcurrencyStamp = "741acf1c-9660-49be-88d8-052694dc180d",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "85ebde07-26db-46ff-a78f-8b2b20bd62bb",
+                            ConcurrencyStamp = "b6f2888a-fa8f-4836-8f9f-cd8b79ee68e8",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

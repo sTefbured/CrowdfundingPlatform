@@ -9,7 +9,7 @@ namespace CrowdfundingPlatform.Repositories
 {
     public class CampaignRepository : ICampaignRepository
     {
-        public readonly AppDbContext appDbContext;
+        public AppDbContext appDbContext { get; }
 
         public CampaignRepository(AppDbContext appDbContext)
         {

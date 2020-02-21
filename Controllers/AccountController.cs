@@ -14,6 +14,7 @@ namespace CrowdfundingPlatform.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly string defaultAvatarPath;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly GoogleDriveRepository googleDriveRepository;
         private readonly SignInManager<ApplicationUser> signInManager;
@@ -26,6 +27,8 @@ namespace CrowdfundingPlatform.Controllers
             this.googleDriveRepository = googleDriveRepository;
             this.signInManager = signInManager;
             this.hostingEnvironment = hostingEnvironment;
+            defaultAvatarPath = googleDriveRepository
+                   .GetImageLink("13BrdEF3igSRUnukQVtRmdPYrmIvwSP9q");
         }
 
         [HttpGet]
@@ -48,23 +51,25 @@ namespace CrowdfundingPlatform.Controllers
                     Nickname = registerViewModel.Nickname,
                     UserName = registerViewModel.Email,
                     Email = registerViewModel.Email,
-                    Identifier = userManager.Users.Count() + 1,
                     RegistrationDate = DateTime.Now,
                     DateOfBirth = registerViewModel.DateOfBirth,
                     AvatarPath = GetAvatarPath(registerViewModel)
                 };
+
                 var result = await userManager.CreateAsync(user, registerViewModel.Password);
 
                 if (result.Succeeded)
-                {                  
+                {
+                    await userManager.AddToRoleAsync(user, "User");
                     await signInManager.SignInAsync(user, false);
+
                     return RedirectToAction("index", "home");
                 }
 
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
-                }
+                }                
             }
             return View(registerViewModel);
         }
@@ -72,7 +77,7 @@ namespace CrowdfundingPlatform.Controllers
         private string GetAvatarPath(RegisterViewModel registerViewModel)
         {
             string avatarFolder = Path.Combine(hostingEnvironment.WebRootPath, "img");
-            string avatarPath = Path.Combine(avatarFolder, "defaultAvatar.png");
+            string avatarPath = defaultAvatarPath;
 
             if (registerViewModel.Avatar != null)
             {
@@ -102,7 +107,7 @@ namespace CrowdfundingPlatform.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
+        public async Task<IActionResult> Login(LoginViewModel loginViewModel, string returnUrl)
         {            
             if (ModelState.IsValid)
             {
@@ -111,7 +116,14 @@ namespace CrowdfundingPlatform.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("index", "home");
+                    if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    else
+                    {
+                        return RedirectToAction("index", "home");
+                    }
                 }
                 ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
             }
@@ -129,12 +141,12 @@ namespace CrowdfundingPlatform.Controllers
             return Json($"{email} is already taken.");
         }
         
-        [Route("~/user/{identifier}")]
-        public IActionResult UserAccount(int identifier)
+        [Route("~/user/{id}")]
+        public IActionResult UserAccount(string id)
         {
             var viewModel = new UserAccountViewModel
             {
-                UserToShow = userManager.Users.FirstOrDefault(user => user.Identifier == identifier)
+                UserToShow = userManager.Users.FirstOrDefault(user => user.Id == id)
             };
 
             if ((userManager.GetUserId(User) == viewModel.UserToShow.Id))

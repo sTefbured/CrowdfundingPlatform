@@ -11,22 +11,31 @@
     <Compile Remove="Migrations\20200208143631_ExtendIdentityMigration.Designer.cs" />
     <Compile Remove="Migrations\20200208144209_ExtendIdentityMigration.cs" />
     <Compile Remove="Migrations\20200208144209_ExtendIdentityMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200208214407_InitialMigration.cs" />
+    <Compile Remove="Migrations\20200208214407_InitialMigration.Designer.cs" />
     <Compile Remove="Migrations\20200209000005_ExtendIdentityMigration.cs" />
     <Compile Remove="Migrations\20200209000005_ExtendIdentityMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200212231201_NicknameMigration.cs" />
+    <Compile Remove="Migrations\20200212231201_NicknameMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200215194259_AddBirthDateAndAvatarMigration.cs" />
+    <Compile Remove="Migrations\20200215194259_AddBirthDateAndAvatarMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200221200423_AddAllMigration.cs" />
+    <Compile Remove="Migrations\20200221200423_AddAllMigration.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Google.Apis.Drive.v3" Version="1.43.0.1860" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />
+    <PackageReference Include="Korzh.EasyQuery.Linq" Version="5.3.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Razor" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
     <PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.3.6" />
   </ItemGroup>

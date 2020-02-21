@@ -1,8 +1,10 @@
 ﻿using CrowdfundingPlatform.Models;
 using CrowdfundingPlatform.Repositories;
 using CrowdfundingPlatform.ViewModels;
+using Korzh.EasyQuery.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,14 +63,16 @@ namespace CrowdfundingPlatform.Controllers
         {
             var model = new SearchViewModel();
             model.Query = query;
-            query = query.ToLower();
-            model.Campaigns = _campaignRepository
-                              .Campaigns
-                              .Where(camp =>
-                                  camp.Name.ToLower().Contains(query)
-                                  || camp.FullDescription.ToLower().Contains(query)
-                                  || camp.ShortDescription.ToLower().Contains(query));
-
+            if (string.IsNullOrEmpty(query))
+            {
+                model.Campaigns = _campaignRepository.Campaigns;
+            }
+            else
+            {
+                model.Campaigns = _campaignRepository.appDbContext.Campaigns.AsEnumerable()
+                    .FullTextSearchQuery(query, null).AsEnumerable();
+            }
+            
             return View(model);
         }
     }

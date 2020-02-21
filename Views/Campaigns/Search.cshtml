@@ -9,7 +9,7 @@
     <div class="card-group">
         @foreach (var campaign in Model.Campaigns)
         {
-            <div class="card m-1">
+            <div class="card m-1 col-lg-5 col-sm">
                 <div class="card-header text-align-center bg-dark">
                     <a class="card-text text-light card-link" style="font-size: xx-large; font-weight: bold" asp-action="campaign" 
                        asp-controller="campaigns" asp-route-id="@campaign.Id">

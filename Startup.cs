@@ -70,9 +70,9 @@ namespace CrowdfundingPlatform
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMarkdown();
             app.UseStatusCodePages();
             app.UseStaticFiles();
+            app.UseMarkdown();
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
         }
