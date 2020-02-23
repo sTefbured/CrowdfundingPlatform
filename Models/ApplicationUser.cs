@@ -14,5 +14,6 @@ namespace CrowdfundingPlatform.Models
         public string AvatarPath { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string RoleId { get; set; }
+        public IEnumerable<Campaign> Campaigns { get; set; }
     }
 }

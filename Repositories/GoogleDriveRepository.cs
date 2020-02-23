@@ -14,6 +14,7 @@ namespace CrowdfundingPlatform.Repositories
 		private string[] Scopes = { DriveService.Scope.Drive };
 		private string ApplicationName = "CrowdIO";
 		private string mainFolderId = "1qNiomlBD7enqT1R3WMkPAD25840TBwl1";
+		private string urlTemplate = "https://drive.google.com/uc?export=download&id=";
 
 		//private string CreateFolder(string folderName)
 		//{
@@ -68,7 +69,7 @@ namespace CrowdfundingPlatform.Repositories
 
 		public string GetImageLink(string imageId)
 		{
-			return "https://drive.google.com/uc?export=download&id=" + imageId;
+			return urlTemplate + imageId;
 		}
 
 		public string UploadFIle(string fileName, Stream stream)
@@ -127,6 +128,15 @@ namespace CrowdfundingPlatform.Repositories
 			{
 				stream.WriteTo(file);
 			}
+		}
+
+		public void DeleteFile(string filePath)
+		{
+			var service = GetDriveServiceInstance();
+
+			var request = service.Files.Delete(filePath.Substring(urlTemplate.Length));
+
+			request.Execute();
 		}
 	}
 }

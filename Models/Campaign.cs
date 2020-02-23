@@ -40,5 +40,9 @@ namespace CrowdfundingPlatform.Models
         public string ImageGalleryUrl { get; set; }
 
         public string VideoUrl { get; set; }
+
+        public string UserId { get; set; }
+
+        public ApplicationUser User { get; set; }
     }
 }

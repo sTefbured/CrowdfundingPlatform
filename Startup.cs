@@ -60,6 +60,7 @@ namespace CrowdfundingPlatform
             services.AddMvc(options => options.EnableEndpointRouting = false)
                 .AddApplicationPart(typeof(MarkdownPageProcessorMiddleware).Assembly);
             services.AddTransient<ICampaignRepository, CampaignRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
             services.AddSingleton<GoogleDriveRepository>();
         }
 

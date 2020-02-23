@@ -1,7 +1,9 @@
 ﻿using CrowdfundingPlatform.Models;
 using CrowdfundingPlatform.Repositories;
 using CrowdfundingPlatform.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -18,17 +20,17 @@ namespace CrowdfundingPlatform.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly GoogleDriveRepository googleDriveRepository;
         private readonly SignInManager<ApplicationUser> signInManager;
-        private readonly IWebHostEnvironment hostingEnvironment;
+        private readonly IUserRepository userRepository;
 
-        public AccountController(UserManager<ApplicationUser> userManager, GoogleDriveRepository googleDriveRepository, 
-            SignInManager<ApplicationUser> signInManager, IWebHostEnvironment hostingEnvironment)
+        public AccountController(IUserRepository userRepository, UserManager<ApplicationUser> userManager, GoogleDriveRepository googleDriveRepository,
+            SignInManager<ApplicationUser> signInManager)
         {
             this.userManager = userManager;
             this.googleDriveRepository = googleDriveRepository;
             this.signInManager = signInManager;
-            this.hostingEnvironment = hostingEnvironment;
+            this.userRepository = userRepository;
             defaultAvatarPath = googleDriveRepository
-                   .GetImageLink("13BrdEF3igSRUnukQVtRmdPYrmIvwSP9q");
+                   .GetImageLink("1mHrI0r8-nvveYI8j53MdHDecYTVIeVk9");
         }
 
         [HttpGet]
@@ -53,14 +55,14 @@ namespace CrowdfundingPlatform.Controllers
                     Email = registerViewModel.Email,
                     RegistrationDate = DateTime.Now,
                     DateOfBirth = registerViewModel.DateOfBirth,
-                    AvatarPath = GetAvatarPath(registerViewModel)
+                    AvatarPath = UploadAvatar(registerViewModel.Avatar)
                 };
 
                 var result = await userManager.CreateAsync(user, registerViewModel.Password);
 
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(user, "User");
+                    await userManager.AddToRoleAsync(user, "Administrator");
                     await signInManager.SignInAsync(user, false);
 
                     return RedirectToAction("index", "home");
@@ -74,17 +76,16 @@ namespace CrowdfundingPlatform.Controllers
             return View(registerViewModel);
         }
 
-        private string GetAvatarPath(RegisterViewModel registerViewModel)
+        private string UploadAvatar(IFormFile avatarFile)
         {
-            string avatarFolder = Path.Combine(hostingEnvironment.WebRootPath, "img");
             string avatarPath = defaultAvatarPath;
 
-            if (registerViewModel.Avatar != null)
+            if (avatarFile != null)
             {
-                string fileName = Guid.NewGuid().ToString() +  registerViewModel.Avatar.FileName;
+                string fileName = Guid.NewGuid().ToString() + avatarFile.FileName;
                 avatarPath = googleDriveRepository
                     .GetImageLink(googleDriveRepository
-                    .UploadFIle(fileName, registerViewModel.Avatar.OpenReadStream()));
+                    .UploadFIle(fileName, avatarFile.OpenReadStream()));
             }
             return avatarPath;
         }
@@ -146,7 +147,7 @@ namespace CrowdfundingPlatform.Controllers
         {
             var viewModel = new UserAccountViewModel
             {
-                UserToShow = userManager.Users.FirstOrDefault(user => user.Id == id)
+                UserToShow = userRepository.GetById(id)
             };
 
             if ((userManager.GetUserId(User) == viewModel.UserToShow.Id))
@@ -159,6 +160,47 @@ namespace CrowdfundingPlatform.Controllers
             }
 
             return View(viewModel);
+        }
+
+        [HttpGet]
+        [Authorize()]
+        public IActionResult Edit()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id, string returnUrl)
+        {
+            if (User.IsInRole("Administrator"))
+            {
+                var userToDelete = await userManager.FindByIdAsync(id);
+                var avatarPath = userToDelete.AvatarPath;
+                if (avatarPath != null && avatarPath != defaultAvatarPath)
+                {
+                    try
+                    {
+                        googleDriveRepository.DeleteFile(userToDelete.AvatarPath);
+                    }
+                    catch (Google.GoogleApiException)
+                    {
+
+                    };
+                }
+
+                var result = await userManager.DeleteAsync(userToDelete);
+
+                if (result.Succeeded)
+                {
+                    return LocalRedirect(returnUrl);
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+            return RedirectToAction("index", "home");
         }
     }
 }

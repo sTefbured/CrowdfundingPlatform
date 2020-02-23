@@ -9,7 +9,6 @@ namespace CrowdfundingPlatform.Repositories
     public interface ICampaignRepository
     {
         IEnumerable<Campaign> Campaigns { get; }
-        AppDbContext appDbContext { get; }
         Campaign GetById(int id);
         Campaign Add(Campaign campaign);
         Campaign Delete(int id);

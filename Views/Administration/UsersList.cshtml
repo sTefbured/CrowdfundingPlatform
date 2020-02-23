@@ -1,0 +1,24 @@
+﻿@model UsersListViewModel;
+@{ 
+    ViewBag.Title = "All users";
+}
+
+<div>
+    <h2>All users</h2>
+    <div class="card">
+        <ul class="list-group list-group-flush">
+            @foreach (var user in Model.Users)
+            {
+                <li class="list-group-item" style="width: 100%;">
+                    <a asp-action="UserAccount" asp-controller="Account" asp-route-id="@user.Id">@user.Nickname</a>
+                    <form method="post" style="align-content: end">
+                        <button asp-action="Delete" asp-controller="Account" asp-route-id="@user.Id" 
+                                asp-route-returnUrl="~/administration/usersList" class="btn btn-danger">
+                            Delete
+                        </button>
+                    </form>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

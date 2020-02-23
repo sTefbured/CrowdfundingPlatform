@@ -9,18 +9,19 @@ namespace CrowdfundingPlatform.Repositories
 {
     public class CampaignRepository : ICampaignRepository
     {
-        public AppDbContext appDbContext { get; }
+        private readonly AppDbContext appDbContext;
 
         public CampaignRepository(AppDbContext appDbContext)
         {
             this.appDbContext = appDbContext;
         }
 
-        public IEnumerable<Campaign> Campaigns => appDbContext.Campaigns;
+        public IEnumerable<Campaign> Campaigns 
+            => appDbContext.Campaigns.Include(campaign => campaign.User).AsEnumerable();
 
         public Campaign GetById(int id)
         {
-            return appDbContext.Campaigns.Find(id);
+            return Campaigns.Single(campaign => campaign.Id == id);
         }
 
         public Campaign Add(Campaign campaign)

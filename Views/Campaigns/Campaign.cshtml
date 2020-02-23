@@ -6,7 +6,10 @@
 
 <div>
     <h1>@Model.Name</h1>
-    <span class="text-muted">@Model.RegistrationDate.Date</span>
+    <h6 class="text-muted">
+        Created by <a class="card-link" href="~/user/@Model.User.Id">@Model.User.Nickname</a> 
+        @Model.RegistrationDate.ToShortDateString()
+    </h6>
     <div style="overflow: hidden">
         <markdown markdown="@Model.FullDescription" />
     </div>

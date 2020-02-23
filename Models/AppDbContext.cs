@@ -29,7 +29,7 @@ namespace CrowdfundingPlatform.Models
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
-                        
+
                         new IdentityRole
                         {
                             Name = "User",
@@ -37,6 +37,8 @@ namespace CrowdfundingPlatform.Models
                         }
                     }
                 );
+
+            builder.Entity<Campaign>().HasOne(p => p.User).WithMany(b => b.Campaigns);
         }
     }
 }

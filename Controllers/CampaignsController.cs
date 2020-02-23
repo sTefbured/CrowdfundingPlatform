@@ -3,6 +3,7 @@ using CrowdfundingPlatform.Repositories;
 using CrowdfundingPlatform.ViewModels;
 using Korzh.EasyQuery.Linq;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,16 +16,20 @@ namespace CrowdfundingPlatform.Controllers
     public class CampaignsController : Controller
     {
         private readonly ICampaignRepository _campaignRepository;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public CampaignsController(ICampaignRepository campaignRepository)
+        public CampaignsController(ICampaignRepository campaignRepository, UserManager<ApplicationUser> userManager)
         {
             _campaignRepository = campaignRepository;
+            this.userManager = userManager;
         }
 
         public ViewResult List()
         {
-            CampaignsListViewModel viewModel = new CampaignsListViewModel();
-            viewModel.Campaigns = _campaignRepository.Campaigns;
+            CampaignsListViewModel viewModel = new CampaignsListViewModel
+            {
+                Campaigns = _campaignRepository.Campaigns
+            };           
             return View(viewModel);
         }
 
@@ -44,8 +49,10 @@ namespace CrowdfundingPlatform.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Create(Campaign campaign)
+        public async Task<IActionResult> Create(Campaign campaign)
         {
+            campaign.User = await userManager.GetUserAsync(User);
+            //campaign.UserId = campaign.User.Id;
             _campaignRepository.Add(campaign);
             return RedirectToAction("campaign", new { Id = campaign.Id });
         }
@@ -61,15 +68,17 @@ namespace CrowdfundingPlatform.Controllers
         [HttpGet]
         public IActionResult Search(string query)
         {
-            var model = new SearchViewModel();
-            model.Query = query;
+            var model = new SearchViewModel() 
+            {
+                Query = query
+            };            
             if (string.IsNullOrEmpty(query))
             {
                 model.Campaigns = _campaignRepository.Campaigns;
             }
             else
             {
-                model.Campaigns = _campaignRepository.appDbContext.Campaigns.AsEnumerable()
+                model.Campaigns = _campaignRepository.Campaigns
                     .FullTextSearchQuery(query, null).AsEnumerable();
             }
             
