@@ -37,12 +37,15 @@ namespace CrowdfundingPlatform.Models
 
         public bool IsPopular { get; set; }
 
+        [Display(Name = "Image")]
         public string ImageGalleryUrl { get; set; }
 
         public string VideoUrl { get; set; }
 
-        public string UserId { get; set; }
+        public string CreatorId { get; set; }
 
-        public ApplicationUser User { get; set; }
+        public ApplicationUser Creator { get; set; }
+
+        public IEnumerable<Contribution> Contributions { get; set; }
     }
 }

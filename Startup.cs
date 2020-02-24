@@ -61,6 +61,7 @@ namespace CrowdfundingPlatform
                 .AddApplicationPart(typeof(MarkdownPageProcessorMiddleware).Assembly);
             services.AddTransient<ICampaignRepository, CampaignRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IContributionRepository, ContributionRepository>();
             services.AddSingleton<GoogleDriveRepository>();
         }
 

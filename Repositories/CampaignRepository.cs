@@ -16,8 +16,10 @@ namespace CrowdfundingPlatform.Repositories
             this.appDbContext = appDbContext;
         }
 
-        public IEnumerable<Campaign> Campaigns 
-            => appDbContext.Campaigns.Include(campaign => campaign.User).AsEnumerable();
+        public IEnumerable<Campaign> Campaigns => appDbContext
+                                                  .Campaigns
+                                                  .Include(campaign => campaign.Creator)
+                                                  .AsEnumerable();
 
         public Campaign GetById(int id)
         {

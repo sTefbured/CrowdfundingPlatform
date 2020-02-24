@@ -1,4 +1,5 @@
 ﻿@model CrowdfundingPlatform.Models.Campaign
+@inject UserManager<ApplicationUser> userManager;
 @addTagHelper *, Westwind.AspNetCore.Markdown
 @{
     ViewBag.Title = Model.Name;
@@ -7,16 +8,31 @@
 <div>
     <h1>@Model.Name</h1>
     <h6 class="text-muted">
-        Created by <a class="card-link" href="~/user/@Model.User.Id">@Model.User.Nickname</a> 
+        Created by <a class="card-link" href="~/user/@Model.Creator.Id">@Model.Creator.Nickname</a> 
         @Model.RegistrationDate.ToShortDateString()
     </h6>
+    <img style="width: 70%; height: 70%" src="@Model.ImageGalleryUrl" />
+    <div>Money earned: @Model.MoneyEarned</div>
+    <div>Goal: @Model.MoneyGoal</div>
     <div style="overflow: hidden">
         <markdown markdown="@Model.FullDescription" />
     </div>
-    <form method="post">
-        <button class="btn btn-danger" asp-action="delete" asp-controller="campaigns"
-                asp-route-id="@Model.Id">
-            Delete
-        </button>
-    </form>
+    @if (userManager.GetUserId(User) == Model.Creator.Id)
+    {
+        <form method="post">
+            <button class="btn btn-danger" asp-action="delete" asp-controller="campaigns"
+                    asp-route-id="@Model.Id">
+                Delete
+            </button>
+        </form>
+    }
+    else
+    {
+        <form method="get">
+            <button class="btn btn-primary" href="#" @*asp-action="contribute" asp-controller="campaigns"
+                    asp-route-id="@Model.Id"*@>
+                Donate
+            </button>
+        </form>
+    }
 </div>

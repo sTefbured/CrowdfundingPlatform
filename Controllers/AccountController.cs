@@ -90,6 +90,7 @@ namespace CrowdfundingPlatform.Controllers
             return avatarPath;
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
@@ -169,6 +170,7 @@ namespace CrowdfundingPlatform.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public async Task<IActionResult> Delete(string id, string returnUrl)
         {

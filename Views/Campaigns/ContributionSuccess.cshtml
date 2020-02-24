@@ -1,0 +1,13 @@
+﻿@model Contribution
+@{ 
+    ViewBag.Title = "Success";
+}
+
+<div class="justify-content-center">
+    <h1>Successful contribution!</h1>
+    <ul>
+        <li>@Model.Campaign.Name</li>
+        <li>@Model.Commentary</li>
+        <li>@Model.Contributor.Nickname</li>
+    </ul>
+</div>

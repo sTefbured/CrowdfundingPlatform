@@ -11,6 +11,7 @@ namespace CrowdfundingPlatform.Models
     public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Campaign> Campaigns { get; set; }
+        public DbSet<Contribution> Contributions { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -38,7 +39,29 @@ namespace CrowdfundingPlatform.Models
                     }
                 );
 
-            builder.Entity<Campaign>().HasOne(p => p.User).WithMany(b => b.Campaigns);
+            builder.Entity<Contribution>().HasOne(contribution => contribution.Campaign)
+                                          .WithMany(campaign => campaign.Contributions)
+                                          .HasForeignKey(contribution => contribution.CampaignId);
+
+            builder.Entity<Contribution>().HasOne(contribution => contribution.Contributor)
+                                          .WithMany(contributor => contributor.Contributions)
+                                          .HasForeignKey(contribution => contribution.ContributorId);
+            //builder.Entity<ApplicationUser>().HasData(
+            //        new ApplicationUser[]
+            //        {
+            //            new ApplicationUser
+            //            {
+            //                UserName = "admin@crowdio.net",
+            //                NormalizedUserName = "ADMIN@CROWDIO.NET",
+            //                Email = "admin@crowdio.net",
+            //                NormalizedEmail = "admin@crowdio.net",
+            //                DateOfBirth = DateTime.Parse("09.11.2000"),
+            //                EmailConfirmed = true,
+            //                Nickname = "Administrator",
+            //                RegistrationDate = DateTime.Now
+            //            }
+            //        }
+            //    );
         }
     }
 }
